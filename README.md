@@ -54,7 +54,7 @@ MERN E-commerce website
 6. DEMO
 
 ## SIGN UP PAGE
-![/SIGN UP](https://github.com/Riteshiitism/EMart/E-mart/blob/main/SignUp.jpg)
+![/SIGN UP](https://github.com/Riteshiitism/EMart/blob/master/SignUp.jpg)
 
 
 
