@@ -14,13 +14,6 @@ export default function Cart(props) {
       setCartLength(JSON.parse(localStorageData).length);
     }
 
-
-
-
-    // const params = new URLSearchParams(window.location.search);
-    // for (const param of params) {
-    //   setCartLength(param[1]);
-    // }
   }, []);
 
   const RemoveFromCarT = (ViewProductObject) => {
@@ -43,7 +36,7 @@ export default function Cart(props) {
         <div className="row">
           {Cart.map((item) => {
             return (
-              <div className="col">
+              
                 <CartCard
                   name={item.name}
                   imageLink={item.image}
@@ -53,7 +46,7 @@ export default function Cart(props) {
                   id={item._id}
                   RemoveFromcartObject={RemoveFromCarT}
                 />
-              </div>
+              
             );
           })}
         </div>

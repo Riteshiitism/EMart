@@ -9,7 +9,7 @@ export default function CartCard(props) {
   const ViewProductObject = {
     name: props.name,
     price: props.price,
-    tagsUI : props.tagsUI,
+    tagsUI: props.tagsUI,
     tags: props.tags,
     image: props.imageLink,
   };
@@ -25,44 +25,46 @@ export default function CartCard(props) {
     props.RemoveFromcartObject(ViewProductObject);
   };
   return (
-    <Card style={{}} className="my-3">
-      <Card.Img
-        variant="top"
-        src={props.imageLink}
-        alt="Image not available"
-        style={{ height: "15rem", width: "100%", objectFit: "cover" }}
-      />
-      <Card.Body>
-        <div style={{ display: "flex" }}>
-          <Card.Title>{props.name}</Card.Title>
-          <ion-icon
-            name="heart-sharp"
-            style={{ marginLeft: "9rem", color: "#fb0066", fontSize: "30px" }}
-          ></ion-icon>
-        </div>
-        <Card.Text>
-          {props.tagsUI.map((item) => {
-            return <Tag value={item} />;
-          })}
-        </Card.Text>
-        
-        <div>
-          <button
-            type="button"
-            className="btn btn-outline-danger"
-            onClick={RemoveFromCarT}
-          >
-            REMOVE FROM CART
-          </button>
-          <Button
-            variant="success mx-2"
-            style={{ backgroundColor: "" }}
-            onClick={setDataToLocalStorage}
-          >
-            <ion-icon name="arrow-forward-sharp"></ion-icon>
-          </Button>
-        </div>
-      </Card.Body>
-    </Card>
+    <div className="col-md-3">
+      <div class="card my-10" style={{ marginTop: "3rem" }}>
+        <Card.Img
+          variant="top"
+          src={props.imageLink}
+          alt="Image not available"
+          style={{ height: "15rem", width: "100%", objectFit: "cover" }}
+        />
+        <Card.Body>
+          <div style={{ display: "flex" }}>
+            <Card.Title>{props.name}</Card.Title>
+            <ion-icon
+              name="heart-sharp"
+              style={{ marginLeft: "9rem", color: "#fb0066", fontSize: "30px" }}
+            ></ion-icon>
+          </div>
+          <Card.Text>
+            {props.tagsUI.map((item) => {
+              return <Tag value={item} />;
+            })}
+          </Card.Text>
+
+          <div>
+            <button
+              type="button"
+              className="btn btn-outline-danger"
+              onClick={RemoveFromCarT}
+            >
+              REMOVE FROM CART
+            </button>
+            <Button
+              variant="success mx-2"
+              style={{ backgroundColor: "" }}
+              onClick={setDataToLocalStorage}
+            >
+              <ion-icon name="arrow-forward-sharp"></ion-icon>
+            </Button>
+          </div>
+        </Card.Body>
+      </div>
+    </div>
   );
 }

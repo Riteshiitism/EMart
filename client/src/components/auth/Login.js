@@ -16,7 +16,7 @@ function Login() {
 
   function eyeCheck() {
     setEye(!eye);
-    if (eye) {
+    if (!eye) {
       setPassType("text");
     } else {
       setPassType("password");
@@ -31,8 +31,10 @@ function Login() {
         password,
       };
 
-      await axios.post(`${API}/auth/login`, loginData);
-
+      let result = await axios.post(`${API}/auth/login`, loginData);
+      console.log(result.data._id);
+      localStorage.setItem('userId',result.data._id);
+      
       await getLoggedIn();
       history("/Item");
     } catch (err) {

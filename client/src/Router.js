@@ -10,6 +10,8 @@ import ItemLayout from "./components/layout/ItemLayout";
 import Item from "./components/Items/Item";
 import ViewProduct from "./components/Items/ViewProduct";
 import Profile from "./components/layout/Profile"
+import WishList from "./components/WishList/Wishlist";
+
 
 
 function Router() {
@@ -32,7 +34,6 @@ function Router() {
             <Route exact path="/" element= {<ItemLayout functionToSetCartSize={SetCart} />}/>
             <Route path="/ViewProduct/:product" element={<ViewProduct/>}/>
             <Route path="/item" element={<Item/>} />
-
           </>
         ): <>
         <Route path="/customer" element={<Customers/>}/>
@@ -41,7 +42,7 @@ function Router() {
         <Route path="/ViewProduct/:product" element={<ViewProduct/>}/>
         <Route path="/Profile" element={<Profile/>}/>
         <Route path="/item" element={<Item/>} />
-
+        <Route path="/wishlist" element={<WishList/>} />
       </>}
       </Routes>
     </BrowserRouter>

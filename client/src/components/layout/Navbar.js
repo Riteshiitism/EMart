@@ -12,16 +12,31 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useEffect } from "react";
 
 function Navbar_(props) {
-
   const { loggedIn } = useContext(AuthContext);
 
   return (
-    <Navbar bg="light" expand="lg" style={{position: "fixed",width: "100%",top:'0px',zIndex: 100}} >
+    <Navbar
+      bg="light"
+      expand="lg"
+      style={{ position: "fixed", width: "100%", top: "0px", zIndex: 100 }}
+    >
       <Container fluid>
-        <Navbar.Brand href="#" style={{display: "flex",fontWeight: "bold"}} className="mx-3" >
-        <ion-icon name="bag-handle-sharp"
-        style={{color: 'white',backgroundColor:'#20BEAD',padding:"7px",borderRadius:"5px",marginRight:'3px'}}></ion-icon>
-        E-MART
+        <Navbar.Brand
+          href="#"
+          style={{ display: "flex", fontWeight: "bold" }}
+          className="mx-3"
+        >
+          <ion-icon
+            name="bag-handle-sharp"
+            style={{
+              color: "white",
+              backgroundColor: "#20BEAD",
+              padding: "7px",
+              borderRadius: "5px",
+              marginRight: "3px",
+            }}
+          ></ion-icon>
+          E-MART
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -30,44 +45,56 @@ function Navbar_(props) {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Link to="/" style={{textDecoration:"none",color:'gray'}}>
-           HOME
-           </Link>
-           {loggedIn === true && (
+            <Link to="/" style={{ textDecoration: "none", color: "gray" }}>
+              HOME
+            </Link>
+            {loggedIn === true && (
+              <>
+                <Link
+                  to="/Profile"
+                  className="mx-3"
+                  style={{ textDecoration: "none", color: "gray" }}
+                >
+                  PROFILE
+                </Link>
+              </>
+            )}
+          </Nav>
+
+          {loggedIn === true && (
             <>
-             <Link to="/Profile" className="mx-3" style={{textDecoration:"none",color:'gray'}}>
-           PROFILE
-           </Link>
+              <Link to="/wishList">
+                <button
+                  type="button"
+                  style={{ backgroundColor: "#fb0066", color: "white" }}
+                  className="btn position-relative mx-2"
+                >
+                  <ion-icon name="heart-sharp"></ion-icon>{" "}
+                </button>
+              </Link>
             </>
           )}
-          
-          </Nav>
-         
-          <Link to="/WishList">
-          <button
-            type="button"
-            style={{ backgroundColor: "#fb0066", color: "white" }}
-            className="btn position-relative mx-2"
-            
-          >
-            <ion-icon name="heart-sharp"></ion-icon>{" "}
-          </button>
-          </Link>
 
-         <Link to="/Cart">
-          <button
-            type="button"
-            style={{ backgroundColor: "#20BEAD", color: "white",marginRight:'1rem' }}
-            className="btn position-relative"
-            
-          >
-            <ion-icon name="cart-outline" style={{ color: "white" }}></ion-icon>{" "}
-            CART
-            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {props.badgeValue}
-              <span className="visually-hidden">unread messages</span>
-            </span>
-          </button>
+          <Link to="/Cart">
+            <button
+              type="button"
+              style={{
+                backgroundColor: "#20BEAD",
+                color: "white",
+                marginRight: "1rem",
+              }}
+              className="btn position-relative"
+            >
+              <ion-icon
+                name="cart-outline"
+                style={{ color: "white" }}
+              ></ion-icon>{" "}
+              CART
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {props.badgeValue}
+                <span className="visually-hidden">unread messages</span>
+              </span>
+            </button>
           </Link>
 
           {loggedIn === true && (
@@ -78,10 +105,21 @@ function Navbar_(props) {
           {loggedIn === false && (
             <>
               <Link to="/login">
-              <Button variant="outline" className="mx-2" style={{color:"#20BEAD",borderColor:'#20BEAD'}}>LOG IN</Button>
+                <Button
+                  variant="outline"
+                  className="mx-2"
+                  style={{ color: "#20BEAD", borderColor: "#20BEAD" }}
+                >
+                  LOG IN
+                </Button>
               </Link>
               <Link to="/register">
-              <Button variant="outline" style={{color:"#20BEAD",borderColor:'#20BEAD'}}>REGISTOR</Button>
+                <Button
+                  variant="outline"
+                  style={{ color: "#20BEAD", borderColor: "#20BEAD" }}
+                >
+                  REGISTOR
+                </Button>
               </Link>
             </>
           )}

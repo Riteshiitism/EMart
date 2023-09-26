@@ -65,8 +65,10 @@ router.post("/", async (req, res) => {
         secure: true,
         sameSite: "none",
       })
-      .send();
-  } catch (err) {
+      .send(savedUser);
+      // res.send(savedUser);
+  } 
+  catch (err) {
     console.error(err);
     res.status(500).send();
   }
@@ -104,7 +106,7 @@ router.post("/login", async (req, res) => {
       },
       process.env.JWT_SECRET
     );
-
+    // localStorage.setItem('user',existingUser._id)
     // send the token in a HTTP-only cookie
 
     res
@@ -113,7 +115,7 @@ router.post("/login", async (req, res) => {
         secure: true,
         sameSite: "none",
       })
-      .send();
+      .send(existingUser);
   } catch (err) {
     console.error(err);
     res.status(500).send();
@@ -143,5 +145,38 @@ router.get("/loggedIn", (req, res) => {
     res.json(false);
   }
 });
+
+
+// router.get("/loggedIn", (req, res) => {
+//   try {
+//     const token = req.cookies.token;
+//     if (!token) return res.json(false);
+
+//     jwt.verify(token, process.env.JWT_SECRET);
+
+//     res.send(true);
+//   } catch (err) {
+//     res.json(false);
+//   }
+// });
+// function verifyToken(req,res,next){
+//   let token = req.headers["authorization"];
+//   // console.log(token);
+//   if(token){
+//     token = token.split(' ')[1];
+//     jwt.verify(token, jwtKey, (err, decoded)=> {
+//       if(err){
+//         console.log("invalid Token");
+//         res.status(401).send([]);
+//       }
+//       else{
+//         // console.log(decoded);
+//         next();
+//       }
+//     });
+//   }else{
+//     res.status(403).send({err:"provide a token"})
+//   }  
+// }
 
 module.exports = router;

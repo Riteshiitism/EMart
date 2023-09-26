@@ -2,43 +2,55 @@ import React from "react";
 import { API } from "../../config";
 
 export default function Filter(props) {
-  const [toSeach, setToSeach] = React.useState("");
-  const [option,setOption] = React.useState(1);
+  const [toSearch, setToSearch] = React.useState("");
+  const [option,setOption] = React.useState("1");
+
   async function fetchData(event) {
     event.preventDefault();
     
     const requestOptionsName = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: toSeach }),
+      body: JSON.stringify({ name: toSearch }),
     };
     const requestOptionsTag = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: toSeach }),
+      body: JSON.stringify({ name: toSearch }),
     };
     const requestOptionsPrice = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ price: toSeach }),
+      body: JSON.stringify({ price: toSearch }),
     };
 
-    let API_URL = `${API}/product/findByName`;
-    let requestOptions = requestOptionsName;
-    // console.log(option);
-    if(option===2){
+    
+    console.log(option);
+    let API_URL ="";
+    let requestOptions;
+    if(option==='1'){
+      // console.log(1);
+      API_URL = `${API}/product/findByName`;
+      requestOptions = requestOptionsName;
+    }
+    else if(option==='2'){
+      // console.log(2);
+      API_URL = `${API}/tags/findByTag`;
+      requestOptions = requestOptionsTag;
+    }
+    else if(option==='3'){
+      // console.log(3);
       API_URL = `${API}/product/filterByPrice`;
       requestOptions = requestOptionsPrice;
     }
-    else if(option===3){
-      API_URL = `${API}/tags/find`;
-      requestOptions = requestOptionsTag;
-    }
+    
+    console.log(API_URL);
     const response = await fetch(
       API_URL,
       requestOptions
     );
     const data = await response.json();
+    console.log(data);
     //  send data to item
     if (data) {
       props.setFilterData(data);
@@ -74,8 +86,8 @@ export default function Filter(props) {
           placeholder="Search"
           aria-label="Search"
           style={{ maxWidth: "30rem" }}
-          value={toSeach}
-          onChange={(event) => setToSeach(event.target.value)}
+          value={toSearch}
+          onChange={(event) => setToSearch(event.target.value)}
         />
         <button className="btn btn-outline-success" onClick={fetchData}>
           Search

@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+var url = require('url');
+var path = require('path');
+
 
 dotenv.config();
 
@@ -15,8 +18,9 @@ app.use(cors({
   origin: "http://localhost:3000",
   credentials: true
 }));
-const Product = require("./models/productModel");
-const {Customer} = require("./models/customerModel");
+
+var __filename = url.parse(process.cwd() + '/' + (process.argv[1] || ''))
+__filename = path.resolve(__filename.pathname);
 
 // set up routes
 app.get('/',(req,res)=>{
@@ -24,54 +28,32 @@ app.get('/',(req,res)=>{
 })
 
 app.use("/auth", require("./routers/userRouter"));
-app.use("/customer", require("./routers/customerRouter"));
-
 app.use('/product',require("./routers/productRouter"));
+app.use('/tags',require('./routers/tagsRouter.js'));
+app.use('/wishlist',require('./routers/wishlistRouter.js'))
 
-
-app.use("/tags",require('./routers/tagsRouter.js'));
-app.use("/wishlist",require('./routers/wishlistRouter.js'))
+app.use(express.static(path.join(__dirname, './client/build')));
 
 const PORT = process.env.PORT || 5000;
 // connect to mongoDB
 mongoose.connect(process.env.MDB_CONNECT,{
     useNewUrlParser:true,
     useUnifiedTopology:true,
+    useFindAndModify: false,
     // useCreateIndex:true
 }).then(()=>{
     console.log("database connection is successful");
 }).catch((err)=>{
     console.log("database connection failed with err " + err);
 });
-// mongoose.connect(
-//   process.env.MDB_CONNECT,
-//   {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   },
-//   (err) => {
-//     if (err) return console.error(err);
-//     console.log("Connected to MongoDB");
-//   }
-// );
 
+
+
+
+app.use("*",function (req,res){
+  res.sendFile(path.join(__dirname , "./client/build/index.html"));
+});
 
 app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
 
-
-
-// app.get('/search/:key', async (req, res) => {
-//    let result = await Product.find({
-//     "$or" : [
-//       {
-//         name : { $regex : req.params.key}
-//       }
-//     ]
-//    });
-   
-//    res.send(result);
-// });
-
-// Ecart
-// 6jzyu7NVRqjdhUcm
 

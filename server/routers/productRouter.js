@@ -2,7 +2,6 @@ const router = require("express").Router();
 const Product = require("../models/productModel");
 
 const {CreateProduct , findByName, filterByPrice} = require('./../controllers/product');
-const { route } = require("./tagsRouter");
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
@@ -12,6 +11,8 @@ router.get("/", async (req, res) => {
     res.status(500).send();
   }
 });
+
+
 router.post('/create', async (req,res)=>{
   
   const results = CreateProduct(req.body);
@@ -19,12 +20,12 @@ router.post('/create', async (req,res)=>{
 })
 
 router.post('/findByName',async(req,res)=>{
-  // console.log(req.body.name)
+  // console.log("called")
   const results= await findByName(req.body.name);
   res.send(results);
 })
 router.post('/filterByPrice',async(req,res)=>{
-  // console.log(req.body.name)
+  // console.log("i called")
   const results= await filterByPrice(req.body.price);
   res.send(results);
 })

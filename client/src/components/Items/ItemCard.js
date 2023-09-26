@@ -8,6 +8,7 @@ export default function ItemCard(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  // const [addWish,set]
 
   const history = useNavigate();
   const ViewProductObject = {
@@ -15,6 +16,7 @@ export default function ItemCard(props) {
     price: props.price,
     tagsUI: props.tagsUI,
     image: props.imageLink,
+    productId: props.id,
   };
   const setDataToLocalStorage = () => {
     window.localStorage.setItem(
@@ -50,74 +52,104 @@ export default function ItemCard(props) {
   };
 
   const [heartStyle, setHeartStyle] = React.useState("heart-outline");
-  function HandleWishlist() {
-    if (heartStyle === "heart-sharp") {
-      setHeartStyle("heart-outline");
-    } else {
+  const HandleWishlist = async (event) => {
+    if (heartStyle !== "heart-sharp") {
       setHeartStyle("heart-sharp");
+      let id = event.target.id;
+      console.log(id);
+
+      let userId = localStorage.getItem("userId");
+      console.log(userId);
+
+      try {
+        const response = await fetch(
+          "http://localhost:5000/wishlist/add-wishlist/" + userId,
+          {
+            method: "PUT",
+            headers: {
+              "content-type": "application/JSON",
+            },
+            body: JSON.stringify({ productId: id }),
+          }
+        );
+        console.log(response);
+        if (response.ok) {
+          console.log("element added in wishlist");
+          // navigate("/wishlist");
+        } else {
+          console.log("Not added");
+        }
+      } catch (err) {
+        console.log("err: ", err);
+      }
+    } else {
+      setHeartStyle("heart-outline");
     }
-  }
+  };
   return (
-    <Card className="m-3" style={{ minWidth: "15rem" }}>
-      <Card.Img
-        variant="top"
-        src={props.imageLink}
-        alt="Image not available"
-        style={{ height: "15rem", width: "100%", objectFit: "cover" }}
-      />
-      <Card.Body>
-        <div style={{ display: "flex" }}>
-          <Card.Title>{props.name}</Card.Title>
+    <div className="col-md-3">
+      <div class="card my-10" style={{ marginTop: "5rem" }}>
+        <Card.Img
+          variant="top"
+          src={props.imageLink}
+          alt="Image not available"
+          style={{ height: "15rem", width: "100%", objectFit: "cover" }}
+        />
+        <Card.Body>
+          <div style={{ display: "flex" }}>
+            <Card.Title>{props.name}</Card.Title>
 
-          <ion-icon
-            name={heartStyle}
-            style={{ marginLeft: "9rem", color: "#fb0066", fontSize: "35px" }}
-            // onClick={HandleWishlist}
-          ></ion-icon>
-        </div>
-        <Card.Text style={{ minHeight: "5rem" }}>
-          {props.tagsUI.map((item) => {
-            return <Tag value={item} />;
-          })}
-        </Card.Text>
+            <ion-icon
+              name={heartStyle}
+              style={{ marginLeft: "9rem", color: "#fb0066", fontSize: "35px" }}
+              onClick={HandleWishlist}
+              id={ViewProductObject.productId}
+            ></ion-icon>
+          </div>
+          <Card.Text style={{ minHeight: "5rem" }}>
+            {props.tagsUI.map((item) => {
+              return <Tag value={item} />;
+            })}
+          </Card.Text>
 
-        <div style={{ display: "flex" }}>
-          <button
-            type="button"
-            className="btn btn-light my-1"
-            style={{ display: "flex" }}
-          >
-            <ion-icon name="pricetag-outline" size="medium"></ion-icon>
-            {props.price}/-
-          </button>
-
-          {/* <Link to="/WishList">
+          <div style={{ display: "flex" }}>
             <button
               type="button"
-              style={{ backgroundColor: "#fb0066", color: "white" }}
-              className="btn position-relative m-1"
+              className="btn btn-light my-1"
+              style={{ display: "flex" }}
             >
-              <ion-icon name="heart-sharp"></ion-icon>{" "}
+              <ion-icon name="pricetag-outline" size="medium"></ion-icon>
+              {props.price}/-
             </button>
-          </Link> */}
-        </div>
-        <div>
-          <Button
-            variant="outline"
-            style={{ color: "#20BEAD", borderColor: "#20BEAD" }}
-            onClick={handleSetCartItem}
-          >
-            ADD TO CART
-          </Button>
-          <Button
-            variant="success mx-2"
-            style={{ backgroundColor: "" }}
-            onClick={setDataToLocalStorage}
-          >
-            <ion-icon name="arrow-forward-sharp"></ion-icon>
-          </Button>
-        </div>
-      </Card.Body>
-    </Card>
+
+            <Link to="/WishList">
+              <button
+                type="button"
+                style={{ backgroundColor: "#fb0066", color: "white" }}
+                className="btn position-relative m-1"
+              >
+                <ion-icon name="heart-sharp"></ion-icon>{" "}
+              </button>
+            </Link>
+          </div>
+          <div>
+            <Button
+              variant="outline"
+              style={{ color: "#20BEAD", borderColor: "#20BEAD" }}
+              onClick={handleSetCartItem}
+            >
+              ADD TO CART
+            </Button>
+            <Button
+              variant="success mx-2"
+              style={{ backgroundColor: "" }}
+              onClick={setDataToLocalStorage}
+            >
+              <ion-icon name="arrow-forward-sharp"></ion-icon>
+            </Button>
+          </div>
+        </Card.Body>
+      </div>
+    </div>
   );
 }

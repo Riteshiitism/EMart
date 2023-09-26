@@ -6,6 +6,7 @@ router.get('/',async (req,res)=>{
     res.send("Hi");
 })
 router.post('/',async (req,res)=>{
+    console.log(req.body.name);
     const entries= await tags.findOne({"name":req.body.name})
    
     if(entries != null){
@@ -24,7 +25,8 @@ router.post('/',async (req,res)=>{
         res.send(JSON.stringify(entry))
     }
 })
-router.post("/find",async (req,res)=>{
+router.post("/findByTag",async (req,res)=>{
+    // console.log(req.body.name);
     var results= await findBytag(req.body.name);
     results = await findByID(results)
     res.send(results);

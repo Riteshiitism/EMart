@@ -19,7 +19,7 @@ function Register() {
 
   function eyeCheck(){
     setEye(!eye);
-    if(eye){
+    if(!eye){
       setPassType("text");
     }
     else{
@@ -42,7 +42,9 @@ function Register() {
         passwordVerify,
       };
 
-      await axios.post(`${API}/auth/`, registerData);
+      let result = await axios.post(`${API}/auth/`, registerData);
+      console.log(result.data._id);
+      localStorage.setItem('userId',result.data._id);
       await getLoggedIn();
       history("/Item");
     } catch (err) {

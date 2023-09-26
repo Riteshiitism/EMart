@@ -8,7 +8,7 @@ export default function Item(props) {
 
   async function getProducts() {
     const ProductRes = await axios.get(`${API}/product`);
-    console.log(ProductRes)
+    // console.log(ProductRes)
     setProduct(ProductRes.data);
     // console.log(product[0].tagsUI);
   }
@@ -20,22 +20,19 @@ export default function Item(props) {
 
   return (
     <>
-      <div className="container mt-3"> 
+      <div className="container"> 
         <div className="row">
           {props?.DataToFetch?.length > 0 ? (
             <>
               {props?.DataToFetch?.map((item) => {
                 return (
-                  <div className="col">
                     <ItemCard
                       name={item.name}
                       imageLink={item.imageLink}
                       tagsUI={item.tagsUI}
                       price={item.price}
                       id={item._id}
-                      // BadgeData={props.BadgeData}
                     />
-                  </div>
                 );
               })}
             </>
@@ -43,7 +40,6 @@ export default function Item(props) {
             <>
               {product.map((item) => {
                 return (
-                  <div className="col">
                     <ItemCard
                       name={item.name}
                       imageLink={item.imageLink}
@@ -51,9 +47,7 @@ export default function Item(props) {
                       tagsUI={item.tagsUI}
                       price={item.price}
                       id={item._id}
-                      // BadgeData={props.BadgeData}
                     />
-                  </div>
                 );
               })}
             </>
